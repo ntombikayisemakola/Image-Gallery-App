@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
 import './Login.css';
+import { FaLock, FaEnvelope } from "react-icons/fa";
 
 function Login(){
+    const [action, setAction] = useState(''); //Added
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
 
@@ -27,13 +29,26 @@ function Login(){
      })
     }
 
+    const registerLink = () => { //Added
+        setAction('active');
+    };
+
     return(
         <Fragment>
             <div className="login-container">
+            <div>Login</div>
             <label>Email Address</label>
-        <input type="text" id="txtEmailAddress" placeholder='Enter Email Address' onChange={(e) => handleEmailAddressChange(e.target.value)} /><br></br>
+        <input 
+        type="text" id="txtEmailAddress" 
+        placeholder='Enter Email Address' 
+        onChange={(e) => handleEmailAddressChange(e.target.value)} />
+        <FaEnvelope className="icon" /><br></br>
         <label>Password</label>
-        <input type="text" id="txtPassword" placeholder='Enter Password' onChange={(e) => handlePasswordChange(e.target.value)} /><br></br>
+        <input 
+        type="text" id="txtPassword" 
+        placeholder='Enter Password' 
+        onChange={(e) => handlePasswordChange(e.target.value)} />
+        <FaLock className="icon" /><br></br>
         <br></br>
         <button onClick={() => handleLogin()}>Login</button>
         </div>

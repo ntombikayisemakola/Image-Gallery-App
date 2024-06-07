@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
 import './Registration.css';
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 
 function Registration(){
     const [fullName, setFullName] = useState('');
@@ -43,13 +44,29 @@ function Registration(){
         <div className="registration-container">
         <div>Registration</div>
         <label>Full Name</label>
-        <input type="text" id="txtName" placeholder='Enter Full Name' onChange={(e) => handleFullNameChange(e.target.value)} /><br></br>
+        <input 
+        type="text" id="txtName" 
+        placeholder='Enter Full Name' 
+        onChange={(e) => handleFullNameChange(e.target.value)} />
+        <FaUser className="icon" /><br></br>
         <label>Email Address</label>
-        <input type="text" id="txtEmailAddress" placeholder='Enter Email Address' onChange={(e) => handleEmailAddressChange(e.target.value)} /><br></br>
+        <input 
+        type="text" id="txtEmailAddress" 
+        placeholder='Enter Email Address' 
+        onChange={(e) => handleEmailAddressChange(e.target.value)} />
+        <FaEnvelope className="icon" />
+        <br></br>
         <label>Password</label>
-        <input type="text" id="txtPassword" placeholder='Enter Password' onChange={(e) => handlePasswordChange(e.target.value)} /><br></br>
+        <input 
+        type="text" id="txtPassword" 
+        placeholder='Enter Password' 
+        onChange={(e) => handlePasswordChange(e.target.value)} />
+        <FaLock className="icon" />
+        <br></br>
         <label>Confirm Password</label>
-        <input type="text" id="txtConfirmPassword" placeholder='Enter Confirm Password' onChange={(e) => handleConfirmPasswordChange(e.target.value)} /><br></br>
+        <input type="text" id="txtConfirmPassword" placeholder='Enter Confirm Password' onChange={(e) => handleConfirmPasswordChange(e.target.value)} />
+        <FaLock className="icon" />
+        <br></br>
         <button onClick={() => handleSave()}>Save</button>
         </div>
         </Fragment>
