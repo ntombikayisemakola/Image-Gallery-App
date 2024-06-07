@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
+import './Registration.css';
 
 function Registration(){
     const [fullName, setFullName] = useState('');
@@ -39,6 +40,7 @@ function Registration(){
 
     return(
         <Fragment>
+        <div className="registration-container">
         <div>Registration</div>
         <label>Full Name</label>
         <input type="text" id="txtName" placeholder='Enter Full Name' onChange={(e) => handleFullNameChange(e.target.value)} /><br></br>
@@ -49,6 +51,7 @@ function Registration(){
         <label>Confirm Password</label>
         <input type="text" id="txtConfirmPassword" placeholder='Enter Confirm Password' onChange={(e) => handleConfirmPasswordChange(e.target.value)} /><br></br>
         <button onClick={() => handleSave()}>Save</button>
+        </div>
         </Fragment>
     )
 }

@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
+import './Login.css';
 
 function Login(){
     const [emailAddress, setEmailAddress] = useState('');
@@ -28,12 +29,14 @@ function Login(){
 
     return(
         <Fragment>
+            <div className="login-container">
             <label>Email Address</label>
         <input type="text" id="txtEmailAddress" placeholder='Enter Email Address' onChange={(e) => handleEmailAddressChange(e.target.value)} /><br></br>
         <label>Password</label>
         <input type="text" id="txtPassword" placeholder='Enter Password' onChange={(e) => handlePasswordChange(e.target.value)} /><br></br>
         <br></br>
         <button onClick={() => handleLogin()}>Login</button>
+        </div>
         </Fragment>
     )
 }

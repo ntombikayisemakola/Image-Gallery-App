@@ -1,11 +1,12 @@
 import './App.css';
 import Registration from './Registration';
-import Login from './Login';
+import Login from './Login'
 
 function App() {
   return (
     <div className="App">
-      <Registration /> <br>
+      <Registration /><br>
+      </br><br>
       </br>
       <Login />
     </div>
