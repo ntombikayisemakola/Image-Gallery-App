@@ -33,30 +33,44 @@ body {
     height: 520px;
 }
 
+.wrapper.forgot-password {
+    height: 420px;
+}
+
 .wrapper .form-box {
     width: 100%;
     padding: 40px;
+    position: absolute;
+    transition: transform .3s ease;
 }
 
 .wrapper .form-box.login {
-    transition: translate .18s ease;
-    translate: 0;
+    transform: translateX(0);
 }
 
 .wrapper.active .form-box.login {
-    transition: none;
-    translate: -400px;
+    transform: translateX(-420px);
 }
 
 .wrapper .form-box.register {
-    position: absolute;
-    transition: none;
-    translate: 400px;
+    transform: translateX(420px);
 }
 
 .wrapper.active .form-box.register {
-    transition: translate .18s ease;
-    translate: 0;
+    transform: translateX(0);
+}
+
+.wrapper .form-box.forgot-password {
+    transform: translateX(420px);
+}
+
+.wrapper.forgot-password .form-box.forgot-password {
+    transform: translateX(0);
+}
+
+.wrapper.forgot-password .form-box.login,
+.wrapper.forgot-password .form-box.register {
+    transform: translateX(-420px);
 }
 
 form h1 {
@@ -92,7 +106,7 @@ form .input-box {
     position: absolute;
     right: 20px;
     top: 50%;
-    translate: 0 -50%;
+    transform: translateY(-50%);
     font-size: 16px;
 }
 
@@ -145,4 +159,11 @@ form .register-link {
 
 .register-link p a:hover {
     text-decoration: underline;
+}
+
+form .message {
+    font-size: 14.5px;
+    color: #fff;
+    margin: 10px 0;
+    text-align: center;
 }

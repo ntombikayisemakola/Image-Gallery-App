@@ -7,8 +7,10 @@ function LoginRegister() {
     const [action, setAction] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
-    const [registerData, setRegisterData] = useState({ fullnames: '', emailAddress: '', password: '', confirmPassword: '' });
+    const [registerData, setRegisterData] = useState({ fullnames: '', emailAddress: '', password: '', confirmPassword: '', IsActive: true });
     const [errors, setErrors] = useState({ emailAddress: '', password: '', fullnames: '', confirmPassword: '' });
+    const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+    const [forgotPasswordMessage, setForgotPasswordMessage] = useState('');
 
     const handleEmailAddressChange = (e) => {
         setEmailAddress(e.target.value);
@@ -16,6 +18,10 @@ function LoginRegister() {
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
+    };
+
+    const handleForgotPasswordEmailChange = (e) => {
+        setForgotPasswordEmail(e.target.value);
     };
 
     const handleLoginSubmit = (e) => {
@@ -70,6 +76,32 @@ function LoginRegister() {
         setAction('active');
     };
 
+    const handleForgotPasswordSubmit = (e) => {
+        e.preventDefault();
+        setForgotPasswordMessage('');
+
+        const data = {
+            EmailAddress: forgotPasswordEmail,
+        };
+
+        const url = 'https://localhost:44308/api/Test/ForgotPassword'; // Ensure this URL is correct
+        axios.post(url, data)
+            .then((result) => {
+                setForgotPasswordMessage('A password reset email has been sent to your email address.');
+            })
+            .catch((error) => {
+                setForgotPasswordMessage('Failed to send password reset email. Please try again.');
+            });
+    };
+
+    const forgotPasswordLink = () => {
+        setAction('forgot-password');
+    };
+
+    const backToLogin = () => {
+        setAction('');
+    };
+
     const loginLink = () => {
         setAction('');
     };
@@ -108,7 +140,7 @@ function LoginRegister() {
 
                     <div className="remember-forgot">
                         <label><input type="checkbox" /> Remember me</label>
-                        <a href="#">Forgot password?</a>
+                        <a href="#" onClick={forgotPasswordLink}>Forgot password?</a>
                     </div>
 
                     <button type="submit">Login</button>
@@ -182,6 +214,30 @@ function LoginRegister() {
 
                     <div className="register-link">
                         <p>Already have an account? <a href="#" onClick={loginLink}>Login</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <div className="form-box forgot-password">
+                <form onSubmit={handleForgotPasswordSubmit}>
+                    <h1>Forgot Password</h1>
+                    <div className="input-box">
+                        <input 
+                            type="email" 
+                            name="forgotPasswordEmail" 
+                            placeholder="Enter your registered email" 
+                            value={forgotPasswordEmail} 
+                            onChange={handleForgotPasswordEmailChange} 
+                            required 
+                        />
+                        <FaEnvelope className="icon" />
+                    </div>
+                    {forgotPasswordMessage && <span className="message">{forgotPasswordMessage}</span>}
+
+                    <button type="submit">Send Reset Link</button>
+
+                    <div className="register-link">
+                        <p>Remember your password? <a href="#" onClick={backToLogin}>Login</a></p>
                     </div>
                 </form>
             </div>
