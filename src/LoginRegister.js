@@ -47,20 +47,30 @@ function LoginRegister() {
 
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
-
+    
         // Reset errors
-        setErrors({ fullnames: '', emailAddress: '', password: '', confirmPassword: '' });
+        setErrors({ fullNames: '', emailAddress: '', password: '', confirmPassword: '' });
+    
+        if (!validateFullNames(registerData.fullnames)) {
+            setErrors((prevErrors) => ({ ...prevErrors, fullnames: 'Full names should contain only letters and spaces' }));
+            return;
+        }
 
-        // Registration logic here
         if (registerData.password !== registerData.confirmPassword) {
             setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: 'Passwords do not match' }));
             return;
         }
-
+    
+        if (!validatePasswordComplexity(registerData.password)) {
+            setErrors((prevErrors) => ({ ...prevErrors, password: 'Password does not meet complexity requirements' }));
+            return;
+        }
+    
         const url = 'https://localhost:44308/api/Test/Registration'; // Ensure this URL is correct
         axios.post(url, registerData)
             .then((result) => {
                 alert(result.data);
+                // Trigger confirmation email sending here
             })
             .catch((error) => {
                 alert(error);
@@ -93,6 +103,33 @@ function LoginRegister() {
 
     const backToLogin = () => {
         setAction('');
+    };
+
+    const validatePasswordComplexity = (password) => {
+        // Password complexity requirements
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSymbol = /[-!@#$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/.test(password);
+    
+        // Check if password meets all complexity requirements
+        if (
+            password.length < minLength ||
+            !hasUpperCase ||
+            !hasLowerCase ||
+            !hasNumber ||
+            !hasSymbol
+        ) {
+            return false;
+        }
+    
+        return true;
+    };
+
+    const validateFullNames = (fullnames) => {
+        const fullNamesRegex = /^[A-Za-z\s]+$/;
+        return fullNamesRegex.test(fullnames);
     };
 
     return (
