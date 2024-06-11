@@ -76,33 +76,22 @@ function LoginRegister() {
         setAction('active');
     };
 
-    const handleForgotPasswordSubmit = (e) => {
-        e.preventDefault();
-        setForgotPasswordMessage('');
-
-        const data = {
-            EmailAddress: forgotPasswordEmail,
-        };
-
-        const url = 'https://localhost:44308/api/Test/ForgotPassword'; // Ensure this URL is correct
-        axios.post(url, data)
-            .then((result) => {
-                setForgotPasswordMessage('A password reset email has been sent to your email address.');
-            })
-            .catch((error) => {
-                setForgotPasswordMessage('Failed to send password reset email. Please try again.');
-            });
-    };
-
     const forgotPasswordLink = () => {
         setAction('forgot-password');
     };
 
-    const backToLogin = () => {
-        setAction('');
+    const handleForgotPasswordSubmit = (e) => {
+        e.preventDefault();
+        setForgotPasswordMessage('');
+
+        // Add your logic here for sending reset password request
     };
 
     const loginLink = () => {
+        setAction('');
+    };
+
+    const backToLogin = () => {
         setAction('');
     };
 
@@ -110,7 +99,9 @@ function LoginRegister() {
         <div className={`wrapper ${action}`}>
             <div className="form-box login">
                 <form onSubmit={handleLoginSubmit}>
-                    <h1>Login</h1>
+                    <h1>Image Gallery App</h1>
+                    <br></br>
+                    <h2>Login</h2>
                     
                     <div className="input-box">
                         <input 
@@ -153,7 +144,7 @@ function LoginRegister() {
 
             <div className="form-box register">
                 <form onSubmit={handleRegisterSubmit}>
-                    <h1>Registration</h1>
+                    <h2>Register Profile</h2>
                     <div className="input-box">
                         <input 
                             type="text" 
@@ -220,7 +211,7 @@ function LoginRegister() {
 
             <div className="form-box forgot-password">
                 <form onSubmit={handleForgotPasswordSubmit}>
-                    <h1>Forgot Password</h1>
+                    <h1>Reset Password</h1>
                     <div className="input-box">
                         <input 
                             type="email" 
@@ -234,10 +225,36 @@ function LoginRegister() {
                     </div>
                     {forgotPasswordMessage && <span className="message">{forgotPasswordMessage}</span>}
 
-                    <button type="submit">Send Reset Link</button>
+                    <div className="input-box">
+                        <input 
+                            type="password" 
+                            name="password" 
+                            placeholder="New Password" 
+                            value={registerData.password} 
+                            onChange={handleRegisterChange} 
+                            required 
+                        />
+                        <FaLock className="icon" />
+                        {errors.password && <span className="error">{errors.password}</span>}
+                    </div>
+
+                    <div className="input-box">
+                        <input 
+                            type="password" 
+                            name="confirmPassword" 
+                            placeholder="Confirm New Password" 
+                            value={registerData.confirmPassword} 
+                            onChange={handleRegisterChange} 
+                            required 
+                        />
+                        <FaLock className="icon" />
+                        {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
+                    </div>
+
+                    <button type="submit">Reset Password</button>
 
                     <div className="register-link">
-                        <p>Remember your password? <a href="#" onClick={backToLogin}>Login</a></p>
+                        <p>Remembered your password? <a href="#" onClick={backToLogin}>Login</a></p>
                     </div>
                 </form>
             </div>

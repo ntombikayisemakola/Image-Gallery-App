@@ -145,6 +145,11 @@ form button {
     font-weight: 700;
 }
 
+button:hover {
+    background-color: #007bff; /* Change the background color to your preferred color */
+    color: #fff; /* Change the text color to white or any other contrasting color */
+}
+
 form .register-link {
     font-size: 14.5px;
     text-align: center;
