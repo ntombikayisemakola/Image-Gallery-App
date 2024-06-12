@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import './LoginRegister.css';
 import { FaLock, FaEnvelope, FaUser } from "react-icons/fa";
+import bcrypt from "bcryptjs";
 
 function LoginRegister() {
     const [action, setAction] = useState('');
@@ -30,11 +31,13 @@ function LoginRegister() {
         // Reset errors
         setErrors({ emailAddress: '', password: '' });
 
+        const hashedPassword = bcrypt.hashSync(password, 10);
+
         const data = {
             EmailAddress: emailAddress,
-            Password: password,
+            Password: hashedPassword,
         };
-        
+
         const url = 'https://localhost:44308/api/Test/Login'; // Ensure this URL is correct
         axios.post(url, data)
             .then((result) => {
@@ -47,10 +50,10 @@ function LoginRegister() {
 
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
-    
+
         // Reset errors
         setErrors({ fullNames: '', emailAddress: '', password: '', confirmPassword: '' });
-    
+
         if (!validateFullNames(registerData.fullnames)) {
             setErrors((prevErrors) => ({ ...prevErrors, fullnames: 'Full names should contain only letters and spaces' }));
             return;
@@ -60,14 +63,22 @@ function LoginRegister() {
             setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: 'Passwords do not match' }));
             return;
         }
-    
+
         if (!validatePasswordComplexity(registerData.password)) {
             setErrors((prevErrors) => ({ ...prevErrors, password: 'Password does not meet complexity requirements' }));
             return;
         }
-    
+
+        const hashedPassword = bcrypt.hashSync(registerData.password, 10);
+
+        const data = {
+            ...registerData,
+            password: hashedPassword,
+            confirmPassword: hashedPassword // Note: Typically, you wouldn't store the confirm password in the database
+        };
+
         const url = 'https://localhost:44308/api/Test/Registration'; // Ensure this URL is correct
-        axios.post(url, registerData)
+        axios.post(url, data)
             .then((result) => {
                 alert(result.data);
                 // Trigger confirmation email sending here
@@ -112,7 +123,7 @@ function LoginRegister() {
         const hasLowerCase = /[a-z]/.test(password);
         const hasNumber = /\d/.test(password);
         const hasSymbol = /[-!@#$%^&*()_+|~=`{}\[\]:";'<>?,.\/]/.test(password);
-    
+
         // Check if password meets all complexity requirements
         if (
             password.length < minLength ||
@@ -123,7 +134,7 @@ function LoginRegister() {
         ) {
             return false;
         }
-    
+
         return true;
     };
 
@@ -139,7 +150,7 @@ function LoginRegister() {
                     <h1>Image Gallery App</h1>
                     <br></br>
                     <h2>Login</h2>
-                    
+
                     <div className="input-box">
                         <input 
                             type="email" 
